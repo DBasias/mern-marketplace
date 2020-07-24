@@ -6,14 +6,20 @@ import {
   IconButton,
   Button,
 } from "@material-ui/core";
-import HomeIcon from "@material-ui/icons/Home";
+import { Home as HomeIcon } from "@material-ui/icons";
 import auth from "./../auth/auth-helper";
 import { Link, withRouter } from "react-router-dom";
 
 const isActive = (history, path) => {
-  if (history.location.pathname == path) return { color: "#ff4081" };
+  if (history.location.pathname == path) return { color: "#bef67a" };
   else return { color: "#ffffff" };
 };
+
+const isPartActive = (history, path) => {
+  if (history.location.pathname.includes(path)) return { color: "#bef67a" };
+  else return { color: "#ffffff" };
+};
+
 const Menu = withRouter(({ history }) => (
   <AppBar position="static">
     <Toolbar>
@@ -24,9 +30,6 @@ const Menu = withRouter(({ history }) => (
         <IconButton aria-label="Home" style={isActive(history, "/")}>
           <HomeIcon />
         </IconButton>
-      </Link>
-      <Link to="/users">
-        <Button style={isActive(history, "/users")}>Users</Button>
       </Link>
       {!auth.isAuthenticated() && (
         <span>
@@ -40,6 +43,13 @@ const Menu = withRouter(({ history }) => (
       )}
       {auth.isAuthenticated() && (
         <span>
+          {auth.isAuthenticated().user.seller && (
+            <Link to="/seller/shops">
+              <Button style={isPartActive(history, "/seller/")}>
+                My Shops
+              </Button>
+            </Link>
+          )}
           <Link to={"/user/" + auth.isAuthenticated().user._id}>
             <Button
               style={isActive(
