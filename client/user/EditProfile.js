@@ -7,6 +7,8 @@ import {
   TextField,
   Typography,
   Icon,
+  FormControlLabel,
+  Switch,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import auth from "./../auth/auth-helper";
@@ -37,6 +39,10 @@ const useStyles = makeStyles(theme => ({
     margin: "auto",
     marginBottom: theme.spacing(2),
   },
+  subheading: {
+    marginTop: theme.spacing(2),
+    color: theme.palette.openTitle,
+  },
 }));
 
 export default function EditProfile({ match }) {
@@ -45,8 +51,8 @@ export default function EditProfile({ match }) {
     name: "",
     password: "",
     email: "",
-    open: false,
     error: "",
+    seller: false,
     redirectToProfile: false,
   });
   const jwt = auth.isAuthenticated();
@@ -55,19 +61,21 @@ export default function EditProfile({ match }) {
     const abortController = new AbortController();
     const signal = abortController.signal;
 
-    read(
-      {
-        userId: match.params.userId,
-      },
-      { t: jwt.token },
-      signal
-    ).then(data => {
-      if (data && data.error) {
-        setValues({ ...values, error: data.error });
-      } else {
-        setValues({ ...values, name: data.name, email: data.email });
+    read({ userId: match.params.userId }, { t: jwt.token }, signal).then(
+      data => {
+        if (data && data.error) {
+          setValues({ ...values, error: data.error });
+        } else {
+          setValues({
+            ...values,
+            name: data.name,
+            email: data.email,
+            seller: data.seller,
+          });
+        }
       }
-    });
+    );
+
     return function cleanup() {
       abortController.abort();
     };
@@ -78,30 +86,34 @@ export default function EditProfile({ match }) {
       name: values.name || undefined,
       email: values.email || undefined,
       password: values.password || undefined,
+      seller: values.seller,
     };
-    update(
-      {
-        userId: match.params.userId,
-      },
-      {
-        t: jwt.token,
-      },
-      user
-    ).then(data => {
-      if (data && data.error) {
-        setValues({ ...values, error: data.error });
-      } else {
-        setValues({ ...values, userId: data._id, redirectToProfile: true });
+
+    update({ userId: match.params.userId }, { t: jwt.token }, user).then(
+      data => {
+        if (data && data.error) {
+          setValues({ ...values, error: data.error });
+        } else {
+          auth.updateUser(data, () => {
+            setValues({ ...values, userId: data._id, redirectToProfile: true });
+          });
+        }
       }
-    });
+    );
   };
+
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
+  };
+
+  const handleCheck = (event, checked) => {
+    setValues({ ...values, seller: checked });
   };
 
   if (values.redirectToProfile) {
     return <Redirect to={"/user/" + values.userId} />;
   }
+
   return (
     <Card className={classes.card}>
       <CardContent>
@@ -136,7 +148,20 @@ export default function EditProfile({ match }) {
           onChange={handleChange("password")}
           margin="normal"
         />
-        <br />{" "}
+        <Typography variant="subtitle1" className={classes.subheading}>
+          Seller Account
+        </Typography>
+        <FormControlLabel
+          control={
+            <Switch
+              classes={{ checked: classes.checked, bar: classes.bar }}
+              checked={values.seller}
+              onChange={handleCheck}
+            />
+          }
+          label={values.seller ? "Active" : "Inactive"}
+        />
+        <br />
         {values.error && (
           <Typography component="p" color="error">
             <Icon color="error" className={classes.error}>
