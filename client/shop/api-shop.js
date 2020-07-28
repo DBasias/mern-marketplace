@@ -15,4 +15,17 @@ const create = async (params, credentials, shop) => {
   }
 };
 
-export { create };
+const list = async signal => {
+  try {
+    let response = await fetch("/api/shops", {
+      method: "GET",
+      signal: signal,
+    });
+
+    return response.json;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { create, list };
