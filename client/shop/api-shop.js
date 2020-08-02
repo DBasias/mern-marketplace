@@ -22,7 +22,7 @@ const list = async signal => {
       signal: signal,
     });
 
-    return await response.json;
+    return await response.json();
   } catch (err) {
     console.log(err);
   }

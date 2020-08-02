@@ -26,50 +26,59 @@ const Menu = withRouter(({ history }) => (
       <Typography variant="h6" color="inherit">
         MERN Marketplace
       </Typography>
-      <Link to="/">
-        <IconButton aria-label="Home" style={isActive(history, "/")}>
-          <HomeIcon />
-        </IconButton>
-      </Link>
-      {!auth.isAuthenticated() && (
-        <span>
-          <Link to="/signup">
-            <Button style={isActive(history, "/signup")}>Sign up</Button>
-          </Link>
-          <Link to="/signin">
-            <Button style={isActive(history, "/signin")}>Sign In</Button>
-          </Link>
-        </span>
-      )}
-      {auth.isAuthenticated() && (
-        <span>
-          {auth.isAuthenticated().user.seller && (
-            <Link to="/seller/shops">
-              <Button style={isPartActive(history, "/seller/")}>
-                My Shops
-              </Button>
-            </Link>
+      <div>
+        <Link to="/">
+          <IconButton aria-label="Home" style={isActive(history, "/")}>
+            <HomeIcon />
+          </IconButton>
+        </Link>
+        <Link to="/shops/all">
+          <Button style={isActive(history, "/shops/all")}>All Shops</Button>
+        </Link>
+      </div>
+      <div style={{ position: "absolute", right: "10px" }}>
+        <span style={{ float: "right" }}>
+          {!auth.isAuthenticated() && (
+            <span>
+              <Link to="/signup">
+                <Button style={isActive(history, "/signup")}>Sign up</Button>
+              </Link>
+              <Link to="/signin">
+                <Button style={isActive(history, "/signin")}>Sign In</Button>
+              </Link>
+            </span>
           )}
-          <Link to={"/user/" + auth.isAuthenticated().user._id}>
-            <Button
-              style={isActive(
-                history,
-                "/user/" + auth.isAuthenticated().user._id
+          {auth.isAuthenticated() && (
+            <span>
+              {auth.isAuthenticated().user.seller && (
+                <Link to="/seller/shops">
+                  <Button style={isPartActive(history, "/seller/")}>
+                    My Shops
+                  </Button>
+                </Link>
               )}
-            >
-              My Profile
-            </Button>
-          </Link>
-          <Button
-            color="inherit"
-            onClick={() => {
-              auth.clearJWT(() => history.push("/"));
-            }}
-          >
-            Sign out
-          </Button>
+              <Link to={"/user/" + auth.isAuthenticated().user._id}>
+                <Button
+                  style={isActive(
+                    history,
+                    "/user/" + auth.isAuthenticated().user._id
+                  )}
+                >
+                  My Profile
+                </Button>
+              </Link>
+              <Button
+                color="inherit"
+                onClick={() => {
+                  auth.clearJWT(() => history.push("/"));
+                }}
+              >
+                Sign out
+              </Button>
+            </span>
+          )}
         </span>
-      )}
+      </div>
     </Toolbar>
   </AppBar>
 ));
