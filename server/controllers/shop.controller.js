@@ -45,6 +45,21 @@ const list = async (req, res) => {
   }
 };
 
+const listByOwner = async (req, res) => {
+  try {
+    let shops = await Shop.find({ owner: req.profile._id }).populate(
+      "owner",
+      "_id name"
+    );
+
+    res.json(shops);
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+};
+
 const photo = (req, res, next) => {
   if (req.shop.image.data) {
     res.set("Content-Type", req.shop.image.contentType);
@@ -78,4 +93,4 @@ const shopByID = async (req, res, next, id) => {
   }
 };
 
-export default { create, list, photo, defaultPhoto, shopByID };
+export default { create, list, photo, defaultPhoto, shopByID, listByOwner };
