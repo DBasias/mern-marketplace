@@ -9,7 +9,7 @@ const create = async (params, credentials, shop) => {
       body: shop,
     });
 
-    return response.json();
+    return await response.json();
   } catch (err) {
     console.log(err);
   }
@@ -22,10 +22,26 @@ const list = async signal => {
       signal: signal,
     });
 
-    return response.json;
+    return await response.json;
   } catch (err) {
     console.log(err);
   }
 };
 
-export { create, list };
+const listByOwner = async (params, credentials, signal) => {
+  try {
+    let response = await fetch("/api/shops/by/" + params.userId, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: "Bearer " + credentials.t,
+      },
+    });
+
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { create, list, listByOwner };
