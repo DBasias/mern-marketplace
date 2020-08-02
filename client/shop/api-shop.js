@@ -32,6 +32,7 @@ const listByOwner = async (params, credentials, signal) => {
   try {
     let response = await fetch("/api/shops/by/" + params.userId, {
       method: "GET",
+      signal: signal,
       headers: {
         Accept: "application/json",
         Authorization: "Bearer " + credentials.t,
