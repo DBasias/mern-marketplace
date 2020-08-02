@@ -15,6 +15,19 @@ const create = async (params, credentials, shop) => {
   }
 };
 
+const read = async (params, signal) => {
+  try {
+    let response = await fetch("/api/shop/" + params.shopId, {
+      method: "GET",
+      signal: signal,
+    });
+
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const list = async signal => {
   try {
     let response = await fetch("/api/shops", {
@@ -45,4 +58,4 @@ const listByOwner = async (params, credentials, signal) => {
   }
 };
 
-export { create, list, listByOwner };
+export { create, read, list, listByOwner };

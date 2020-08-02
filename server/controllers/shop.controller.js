@@ -98,4 +98,12 @@ const shopByID = async (req, res, next, id) => {
   }
 };
 
-export default { create, list, photo, defaultPhoto, shopByID, listByOwner };
+export default {
+  create,
+  read,
+  list,
+  photo,
+  defaultPhoto,
+  shopByID,
+  listByOwner,
+};
