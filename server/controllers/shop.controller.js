@@ -34,6 +34,11 @@ const create = (req, res) => {
   });
 };
 
+const read = (req, res) => {
+  req.shop.image = undefined;
+  return res.json(req.shop);
+};
+
 const list = async (req, res) => {
   try {
     let shops = await Shop.find();
