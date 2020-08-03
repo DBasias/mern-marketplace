@@ -18,6 +18,7 @@ import {
 import { Edit } from "@material-ui/icons";
 import auth from "./../auth/auth-helper";
 import { listByOwner } from "./api-shop";
+import DeleteShop from "./DeleteShop";
 
 const useStyles = makeStyles(theme => ({
   root: theme.mixins.gutters({
