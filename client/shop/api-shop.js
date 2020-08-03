@@ -75,4 +75,4 @@ const update = async (params, credentials, shop) => {
   }
 };
 
-export { create, read, list, listByOwner };
+export { create, read, list, listByOwner, update };
