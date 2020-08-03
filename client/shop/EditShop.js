@@ -11,7 +11,7 @@ import {
   CardActions,
 } from "@material-ui/core";
 import { AddPhotoAlternate as FileUpload } from "@material-ui/icons";
-import { read } from "./api-shop";
+import { read, update } from "./api-shop";
 import auth from "./../auth/auth-helper";
 import { Redirect } from "react-router";
 

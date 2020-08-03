@@ -123,7 +123,7 @@ const defaultPhoto = (req, res) => {
 };
 
 const isOwner = (req, res, next) => {
-  const isOwner = req.shop && req.auth && req.shop.owner._id === req.auth._id;
+  const isOwner = req.shop && req.auth && req.shop.owner._id == req.auth._id;
 
   if (!isOwner) {
     return res.status(403).json({

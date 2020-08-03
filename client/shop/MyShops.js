@@ -121,7 +121,7 @@ export default function MyShops() {
                           </Button>
                         </Link>
                         <Link to={"/seller/shop/edit/" + shop._id}>
-                          <IconButton aria-lael="Edit" color="primary">
+                          <IconButton aria-label="Edit" color="primary">
                             <Edit />
                           </IconButton>
                         </Link>

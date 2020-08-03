@@ -7,6 +7,7 @@ import {
   DialogContentText,
   DialogActions,
   Button,
+  Dialog,
 } from "@material-ui/core";
 import { Delete as DeleteIcon } from "@material-ui/icons";
 import auth from "./../auth/auth-helper";
