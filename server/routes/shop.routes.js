@@ -27,7 +27,8 @@ router.route("/api/shops/defaultphoto").get(shopCtrl.defaultPhoto);
 
 router
   .route("/api/shops/:shopId")
-  .put(authCtrl.requireSignin, shopCtrl.isOwner, shopCtrl.update);
+  .put(authCtrl.requireSignin, shopCtrl.isOwner, shopCtrl.update)
+  .delete(authCtrl.requireSignin, shopCtrl.isOwner, shopCtrl.remove);
 
 router.param("shopId", shopCtrl.shopByID);
 router.param("userId", userCtrl.userByID);
