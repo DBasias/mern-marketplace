@@ -68,7 +68,7 @@ export default function NewShop() {
     values.name && shopData.append("name", values.name);
     values.description && shopData.append("description", values.description);
     values.image && shopData.append("image", values.image);
-
+    console.log(values);
     create({ userId: jwt.user._id }, { t: jwt.token }, shopData).then(data => {
       if (data.error) {
         setValues({ ...values, error: data.error });

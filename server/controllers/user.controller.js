@@ -86,7 +86,7 @@ const remove = async (req, res) => {
 const isSeller = (req, res, next) => {
   const isSeller = req.profile && req.profile.seller;
 
-  if (!seller) {
+  if (!isSeller) {
     return res.status(403).json({
       error: "User is not a seller",
     });
