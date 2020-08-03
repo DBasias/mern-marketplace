@@ -58,4 +58,21 @@ const listByOwner = async (params, credentials, signal) => {
   }
 };
 
+const update = async (params, credentials, shop) => {
+  try {
+    let response = await fetch("/api/shops/" + params.shopId, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        Authorization: "Bearer " + credentials.t,
+      },
+      body: shop,
+    });
+
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export { create, read, list, listByOwner };
