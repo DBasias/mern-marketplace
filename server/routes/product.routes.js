@@ -16,6 +16,6 @@ router
 router.route("/api/product/defaultphoto").get(productCtrl.defaultPhoto);
 
 router.param("shopId", shopCtrl.shopByID);
-router.param("productId", productCtrl.productById);
+router.param("productId", productCtrl.productByID);
 
 export default router;
