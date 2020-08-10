@@ -10,6 +10,12 @@ router
   .post(authCtrl.requireSignin, shopCtrl.isOwner, productCtrl.create)
   .get(productCtrl.listByShop);
 
+router
+  .route("/api/product/image/:productId")
+  .get(productCtrl.photo, productCtrl.defaultPhoto);
+router.route("/api/product/defaultphoto").get(productCtrl.defaultPhoto);
+
 router.param("shopId", shopCtrl.shopByID);
+router.param("productId", productCtrl.productById);
 
 export default router;
