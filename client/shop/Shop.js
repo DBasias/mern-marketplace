@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { CardContent, Typography, Avatar } from "@material-ui/core";
+import { CardContent, Typography, Avatar, Grid, Card } from "@material-ui/core";
 import { read } from "./api-shop";
+import Products from "./../product/Products";
+import { listByShop } from "../product/api-product";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -39,6 +41,7 @@ const useStyles = makeStyles(theme => ({
 export default function Shop({ match }) {
   const classes = useStyles();
   const [shop, setShop] = useState("");
+  const [products, setProducts] = useState([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -58,26 +61,67 @@ export default function Shop({ match }) {
     };
   }, [match.params.shopId]);
 
+  useEffect(() => {
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+
+    listByShop({ shopId: match.params.shopId }, signal).then(data => {
+      if (data.error) {
+        setError(data.error);
+      } else {
+        setProducts(data);
+      }
+    });
+
+    return function cleanup() {
+      abortController.abort();
+    };
+  }, [match.params.shopId]);
+
   const logoUrl = shop._id
     ? `/api/shops/logo/${shop._id}?${new Date().getTime()}`
     : "/api/shops/defaultPhoto";
 
   return (
-    <CardContent>
-      <Typography type="headline" component="h2" className={classes.title}>
-        {shop.name}
-      </Typography>
-      <br />
-      <Avatar src={logoUrl} className={classes.bigAvatar} />
-      <br />
-      <Typography
-        type="subheading"
-        component="h2"
-        className={classes.subheading}
-      >
-        {shop.description}
-      </Typography>
-      <br />
-    </CardContent>
+    <div className={classes.root}>
+      <Grid container spacing={8}>
+        <Grid items xs={4} sm={4}>
+          <Card className={classes.card}>
+            <CardContent>
+              <Typography
+                type="headline"
+                component="h2"
+                className={classes.title}
+              >
+                {shop.name}
+              </Typography>
+              <br />
+              <Avatar src={logoUrl} className={classes.bigAvatar} />
+              <br />
+              <Typography
+                type="subheading"
+                component="h2"
+                className={classes.subheading}
+              >
+                {shop.description}
+              </Typography>
+              <br />
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid items xs={8} sm={8}>
+          <Card>
+            <Typography
+              type="title"
+              component="h2"
+              className={classes.productTitle}
+            >
+              Products
+            </Typography>
+            <Products products={products} searched={false} />
+          </Card>
+        </Grid>
+      </Grid>
+    </div>
   );
 }
