@@ -33,4 +33,18 @@ const create = (req, res, next) => {
   });
 };
 
-export default { create };
+const listByShop = async (req, res) => {
+  try {
+    let products = await Product.find({ shop: req.shop._id })
+      .populate("shop", "_id name")
+      .select("-image");
+
+    res.json(products);
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+};
+
+export default { create, listByShop };
