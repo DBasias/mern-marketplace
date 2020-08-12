@@ -41,4 +41,17 @@ const listLatest = async signal => {
   }
 };
 
-export { create, listByShop, listLatest };
+const listRelated = async (params, signal) => {
+  try {
+    let response = await fetch("/api/products/related/" + params.productId, {
+      method: "GET",
+      signal: signal,
+    });
+
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { create, listByShop, listLatest, listRelated };
