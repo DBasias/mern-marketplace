@@ -12,6 +12,8 @@ router
 
 router.route("/api/products/latest").get(productCtrl.listLatest);
 
+router.route("/api/products/related/:productId").get(productCtrl.listRelated);
+
 router
   .route("/api/product/image/:productId")
   .get(productCtrl.photo, productCtrl.defaultPhoto);

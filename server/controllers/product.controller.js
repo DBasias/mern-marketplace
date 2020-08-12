@@ -64,6 +64,24 @@ const listLatest = async (req, res) => {
   }
 };
 
+const listRelated = async (req, res) => {
+  try {
+    let products = await Product.find({
+      _id: { $ne: req.product },
+      category: req.product.category,
+    })
+      .limit(5)
+      .populate("shop", "_id name")
+      .exec();
+
+    res.json(products);
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+};
+
 const photo = (req, res, next) => {
   if (req.product.image.data) {
     res.set("Content-Type", req.product.image.contentType);
@@ -101,6 +119,7 @@ export default {
   create,
   listByShop,
   listLatest,
+  listRelated,
   photo,
   defaultPhoto,
   productByID,
