@@ -48,6 +48,22 @@ const listByShop = async (req, res) => {
   }
 };
 
+const listLatest = async (req, res) => {
+  try {
+    let products = await Product.find({})
+      .sort("-created")
+      .limit(5)
+      .populate("shop", "_id name")
+      .exec();
+
+    res.json(products);
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+};
+
 const photo = (req, res, next) => {
   if (req.product.image.data) {
     res.set("Content-Type", req.product.image.contentType);

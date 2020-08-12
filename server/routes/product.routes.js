@@ -10,6 +10,8 @@ router
   .post(authCtrl.requireSignin, shopCtrl.isOwner, productCtrl.create)
   .get(productCtrl.listByShop);
 
+router.route("/api/products/latest").get(productCtrl.listLatest);
+
 router
   .route("/api/product/image/:productId")
   .get(productCtrl.photo, productCtrl.defaultPhoto);
