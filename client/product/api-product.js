@@ -28,4 +28,17 @@ const listByShop = async (params, signal) => {
   }
 };
 
-export { create, listByShop };
+const listLatest = async signal => {
+  try {
+    let response = await fetch("/api/products/latest", {
+      method: "GET",
+      signal: signal,
+    });
+
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { create, listByShop, listLatest };
