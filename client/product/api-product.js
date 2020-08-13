@@ -15,6 +15,19 @@ const create = async (params, credentials, product) => {
   }
 };
 
+const read = async (params, signal) => {
+  try {
+    let response = await fetch("/api/products/" + params.productId, {
+      method: "GET",
+      signal: signal,
+    });
+
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const listByShop = async (params, signal) => {
   try {
     let response = await fetch("/api/products/by/" + params.shopId, {
@@ -54,4 +67,4 @@ const listRelated = async (params, signal) => {
   }
 };
 
-export { create, listByShop, listLatest, listRelated };
+export { create, read, listByShop, listLatest, listRelated };
