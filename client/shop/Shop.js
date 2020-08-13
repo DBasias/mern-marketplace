@@ -85,7 +85,7 @@ export default function Shop({ match }) {
   return (
     <div className={classes.root}>
       <Grid container spacing={8}>
-        <Grid items xs={4} sm={4}>
+        <Grid item xs={4} sm={4}>
           <Card className={classes.card}>
             <CardContent>
               <Typography
@@ -109,7 +109,7 @@ export default function Shop({ match }) {
             </CardContent>
           </Card>
         </Grid>
-        <Grid items xs={8} sm={8}>
+        <Grid item xs={8} sm={8}>
           <Card>
             <Typography
               type="title"
