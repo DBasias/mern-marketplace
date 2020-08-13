@@ -34,6 +34,11 @@ const create = (req, res, next) => {
   });
 };
 
+const read = (req, res) => {
+  req.product.image = undefined;
+  return res.json(req.product);
+};
+
 const listByShop = async (req, res) => {
   try {
     let products = await Product.find({ shop: req.shop._id })
@@ -117,6 +122,7 @@ const productByID = async (req, res, next, id) => {
 
 export default {
   create,
+  read,
   listByShop,
   listLatest,
   listRelated,
