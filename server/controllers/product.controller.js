@@ -85,6 +85,19 @@ const update = (req, res) => {
   });
 };
 
+const remove = async (req, res) => {
+  try {
+    let product = req.product;
+    let deletedProduct = await product.remove();
+
+    res.json(deletedProduct);
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+};
+
 const listLatest = async (req, res) => {
   try {
     let products = await Product.find({})
@@ -156,6 +169,7 @@ export default {
   create,
   read,
   update,
+  remove,
   listByShop,
   listLatest,
   listRelated,
