@@ -21,6 +21,10 @@ router
   .get(productCtrl.photo, productCtrl.defaultPhoto);
 router.route("/api/product/defaultphoto").get(productCtrl.defaultPhoto);
 
+router
+  .route("/api/product/:shopId/:productId")
+  .put(authCtrl.requireSignin, shopCtrl.isOwner, productCtrl.update);
+
 router.param("shopId", shopCtrl.shopByID);
 router.param("productId", productCtrl.productByID);
 

@@ -1,6 +1,7 @@
 import fs from "fs";
-import Product from "./../models/product.model";
+import { extend } from "lodash";
 import formidable from "formidable";
+import Product from "./../models/product.model";
 import errorHandler from "../helpers/dbErrorHandler";
 import defaultImage from "./../../client/assets/images/default.png";
 
@@ -51,6 +52,37 @@ const listByShop = async (req, res) => {
       error: errorHandler.getErrorMessage(err),
     });
   }
+};
+
+const update = (req, res) => {
+  let form = new formidable.IncomingForm();
+  form.keepExtensions = true;
+
+  form.parse(req, async (err, fields, files) => {
+    if (err) {
+      return res.status(400).json({
+        message: "Photo could not be uploaded",
+      });
+    }
+
+    let product = req.product;
+    product = extend(product, fields);
+    product.updated = Date.now();
+
+    if (files.image) {
+      product.image.data = fs.readFileSync(files.image.path);
+      product.image.contentType = files.image.type;
+    }
+
+    try {
+      let result = await product.save();
+      res.json(result);
+    } catch (err) {
+      return res.status(400).json({
+        error: errorHandler.getErrorMessage(err),
+      });
+    }
+  });
 };
 
 const listLatest = async (req, res) => {
@@ -123,6 +155,7 @@ const productByID = async (req, res, next, id) => {
 export default {
   create,
   read,
+  update,
   listByShop,
   listLatest,
   listRelated,
