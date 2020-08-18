@@ -48,6 +48,26 @@ const update = async (params, credentials, product) => {
   }
 };
 
+const remove = async (params, credentials) => {
+  try {
+    let response = await fetch(
+      "/api/product/" + params.shopId + "/" + params.productId,
+      {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + credentials.t,
+        },
+      }
+    );
+
+    return response.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const listByShop = async (params, signal) => {
   try {
     let response = await fetch("/api/products/by/" + params.shopId, {
@@ -87,4 +107,4 @@ const listRelated = async (params, signal) => {
   }
 };
 
-export { create, read, update, listByShop, listLatest, listRelated };
+export { create, read, update, remove, listByShop, listLatest, listRelated };
