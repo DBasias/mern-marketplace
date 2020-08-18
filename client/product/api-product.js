@@ -28,6 +28,26 @@ const read = async (params, signal) => {
   }
 };
 
+const update = async (params, credentials, product) => {
+  try {
+    let response = await fetch(
+      "/api/product/" + params.shopId + "/" + params.productId,
+      {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          Authorization: "Bearer " + credentials.t,
+        },
+        body: product,
+      }
+    );
+
+    return response.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const listByShop = async (params, signal) => {
   try {
     let response = await fetch("/api/products/by/" + params.shopId, {
@@ -67,4 +87,4 @@ const listRelated = async (params, signal) => {
   }
 };
 
-export { create, read, listByShop, listLatest, listRelated };
+export { create, read, update, listByShop, listLatest, listRelated };
