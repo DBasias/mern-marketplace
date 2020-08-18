@@ -16,6 +16,7 @@ import {
 import { Edit } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { listByShop } from "./api-product";
+import DeleteProduct from "./DeleteProduct";
 
 const useStyles = makeStyles(theme => ({
   products: {
