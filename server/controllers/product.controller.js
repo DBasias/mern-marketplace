@@ -144,6 +144,31 @@ const listCategories = async (req, res) => {
   }
 };
 
+const list = async (req, res) => {
+  const query = {};
+
+  if (req.query.search) {
+    query.name = { $regex: req.query.search, $options: "i" };
+  }
+
+  if (req.query.category && req.query.category !== "All") {
+    query.category = req.query.category;
+  }
+
+  try {
+    let products = await Product.find(query)
+      .populate("shop", "_id name")
+      .select("-image")
+      .exec();
+
+    res.json(products);
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+};
+
 const photo = (req, res, next) => {
   if (req.product.image.data) {
     res.set("Content-Type", req.product.image.contentType);
@@ -186,6 +211,7 @@ export default {
   listLatest,
   listRelated,
   listCategories,
+  list,
   photo,
   defaultPhoto,
   productByID,
