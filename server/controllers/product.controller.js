@@ -40,20 +40,6 @@ const read = (req, res) => {
   return res.json(req.product);
 };
 
-const listByShop = async (req, res) => {
-  try {
-    let products = await Product.find({ shop: req.shop._id })
-      .populate("shop", "_id name")
-      .select("-image");
-
-    res.json(products);
-  } catch (err) {
-    return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
-    });
-  }
-};
-
 const update = (req, res) => {
   let form = new formidable.IncomingForm();
   form.keepExtensions = true;
@@ -98,6 +84,20 @@ const remove = async (req, res) => {
   }
 };
 
+const listByShop = async (req, res) => {
+  try {
+    let products = await Product.find({ shop: req.shop._id })
+      .populate("shop", "_id name")
+      .select("-image");
+
+    res.json(products);
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+};
+
 const listLatest = async (req, res) => {
   try {
     let products = await Product.find({})
@@ -123,6 +123,18 @@ const listRelated = async (req, res) => {
       .limit(5)
       .populate("shop", "_id name")
       .exec();
+
+    res.json(products);
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+};
+
+const listCategories = async (req, res) => {
+  try {
+    let products = await Product.distinct("category", {});
 
     res.json(products);
   } catch (err) {
@@ -173,6 +185,7 @@ export default {
   listByShop,
   listLatest,
   listRelated,
+  listCategories,
   photo,
   defaultPhoto,
   productByID,
