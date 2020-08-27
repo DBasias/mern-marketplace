@@ -1,3 +1,5 @@
+import queryString from "query-string";
+
 const create = async (params, credentials, product) => {
   try {
     let response = await fetch("/api/products/by/" + params.shopId, {
@@ -81,7 +83,7 @@ const listByShop = async (params, signal) => {
   }
 };
 
-const listLatest = async (signal) => {
+const listLatest = async signal => {
   try {
     let response = await fetch("/api/products/latest", {
       method: "GET",
@@ -107,7 +109,7 @@ const listRelated = async (params, signal) => {
   }
 };
 
-const listCategories = async (signal) => {
+const listCategories = async signal => {
   try {
     let response = await fetch("/api/products/categories", {
       method: "GET",
@@ -115,6 +117,20 @@ const listCategories = async (signal) => {
     });
 
     return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const list = async params => {
+  const query = queryString.stringify(params);
+
+  try {
+    let response = await fetch("/api/products?" + query, {
+      method: "GET",
+    });
+
+    return response.json();
   } catch (err) {
     console.log(err);
   }
@@ -129,4 +145,5 @@ export {
   listLatest,
   listRelated,
   listCategories,
+  list,
 };
