@@ -1,14 +1,16 @@
 import React from "react";
+import { Link, withRouter } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
   Typography,
   IconButton,
   Button,
+  Badge,
 } from "@material-ui/core";
-import { Home as HomeIcon } from "@material-ui/icons";
+import { Home as HomeIcon, ShoppingCart as CartIcon } from "@material-ui/icons";
 import auth from "./../auth/auth-helper";
-import { Link, withRouter } from "react-router-dom";
+import cart from "../cart/cart-helper";
 
 const isActive = (history, path) => {
   if (history.location.pathname == path) return { color: "#bef67a" };
@@ -34,6 +36,19 @@ const Menu = withRouter(({ history }) => (
         </Link>
         <Link to="/shops/all">
           <Button style={isActive(history, "/shops/all")}>All Shops</Button>
+        </Link>
+        <Link to="/cart">
+          <Button style={isActive(history, "/cart")}>
+            Cart
+            <Badge
+              color="secondary"
+              invisible={false}
+              badgeContent={cart.itemTotal()}
+              style={{ marginLeft: "7px" }}
+            >
+              <CartIcon />
+            </Badge>
+          </Button>
         </Link>
       </div>
       <div style={{ position: "absolute", right: "10px" }}>

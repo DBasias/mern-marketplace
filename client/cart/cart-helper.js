@@ -1,5 +1,5 @@
 const cart = {
-  addItem: (item, cb) => {
+  addItem(item, cb) {
     let cart = [];
 
     if (typeof window !== "undefined") {
@@ -15,6 +15,14 @@ const cart = {
       localStorage.setItem("cart", JSON.stringify(cart));
       cb();
     }
+  },
+  itemTotal() {
+    if (typeof window !== "undefined") {
+      if (localStorage.getItem("cart")) {
+        return JSON.parse(localStorage.getItem("cart")).length;
+      }
+    }
+    return 0;
   },
 };
 

@@ -25,7 +25,11 @@ export default function AddToCart(props) {
   const classes = useStyles();
   const [redirect, setRedirect] = useState(false);
 
-  const addToCart = () => {};
+  const addToCart = () => {
+    cart.addItem(props.item, () => {
+      setRedirect(true);
+    });
+  };
 
   if (redirect) {
     return <Redirect to="/cart" />;
