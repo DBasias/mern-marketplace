@@ -20,15 +20,17 @@ export default function Cart() {
   };
 
   return (
-    <Grid container spacing={24}>
-      <Grid item xs={6} sm={6}>
-        <CartItems checkout={checkout} setCheckout={showCheckout} />
-      </Grid>
-      {checkout && (
+    <div className={classes.root}>
+      <Grid container spacing={24}>
         <Grid item xs={6} sm={6}>
-          <Checkout />
+          <CartItems checkout={checkout} setCheckout={showCheckout} />
         </Grid>
-      )}
-    </Grid>
+        {checkout && (
+          <Grid item xs={6} sm={6}>
+            <Checkout />
+          </Grid>
+        )}
+      </Grid>
+    </div>
   );
 }
