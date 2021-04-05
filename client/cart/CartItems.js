@@ -134,7 +134,7 @@ export default function CartItems(props) {
       <Typography type="title" className={classes.title}>
         Shopping Cart
       </Typography>
-      {cartItems > 0 ? (
+      {cartItems.length > 0 ? (
         <span>
           {cartItems.map((item, i) => {
             return (

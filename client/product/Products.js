@@ -8,6 +8,7 @@ import {
   GridListTileBar,
   Typography,
 } from "@material-ui/core";
+import AddToCart from "../cart/AddToCart";
 
 const useStyles = makeStyles(theme => ({
   root: {
