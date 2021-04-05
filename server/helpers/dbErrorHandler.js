@@ -8,7 +8,7 @@ const getUniqueErrorMessage = err => {
 
   try {
     let fieldName = err.message.substring(
-      err.message.lastIndexOf(".$") + 2,
+      err.message.lastIndexOf("index: ") + 7,
       err.message.lastIndexOf("_1")
     );
 
