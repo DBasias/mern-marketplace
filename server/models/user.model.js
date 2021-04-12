@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  stripe_selle: {},
+  stripe_seller: {},
   hashed_password: {
     type: String,
     required: "Password is required",
