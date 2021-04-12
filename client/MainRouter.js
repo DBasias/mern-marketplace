@@ -46,6 +46,8 @@ const MainRouter = () => {
           path="/seller/:shopId/:productId/edit"
           component={EditProduct}
         />
+
+        <Route path="seller/stripe/connect" component={StripeConnect} />
       </Switch>
     </div>
   );
