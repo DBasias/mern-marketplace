@@ -29,6 +29,8 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(3),
     color: theme.palette.protectedTitle,
   },
+  stripe_connect: { marginRight: "10px" },
+  stripe_connected: { verticalAlign: "super", marginRight: "10px" },
 }));
 
 export default function Profile({ match }) {
@@ -79,6 +81,26 @@ export default function Profile({ match }) {
           {auth.isAuthenticated().user &&
             auth.isAuthenticated().user._id == user._id && (
               <ListItemSecondaryAction>
+                {user.seller && user.stripe_seller ? (
+                  <Button
+                    variant="contained"
+                    disabled
+                    className={classes.stripe_connected}
+                  >
+                    Stripe Connected
+                  </Button>
+                ) : (
+                  <a
+                    href={
+                      "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=" +
+                      config.stripe_connect_test_client_id +
+                      "&scope=read_write"
+                    }
+                    className={classes.stripe_connect}
+                  >
+                    <img src={stripeButton} />
+                  </a>
+                )}
                 <Link to={"/user/edit/" + user._id}>
                   <IconButton aria-label="Edit" color="primary">
                     <Edit />
