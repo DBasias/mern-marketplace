@@ -17,6 +17,7 @@ import NewProduct from "./product/NewProduct";
 import Product from "./product/Product";
 import EditProduct from "./product/EditProduct";
 import Cart from "./cart/Cart";
+import StripeConnect from "./user/StripeConnect";
 
 const MainRouter = () => {
   return (
